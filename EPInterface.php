@@ -1,14 +1,14 @@
 <?php
 class EPInterface {
 	
-	private $epmd_connection;
+	public $epmd_connection;
 	
 	function __construct($remote_addr, $node_name, $port = 4369) {
 		$this->epmd_connection = new EPMDConnection($remote_addr, $node_name, $this, $port);
 	}
 	
 	function epmd_connection_active() {
-		return $epmd_connection->socket;
+		return $this->epmd_connection->socket;
 	}
 	
 }
@@ -20,8 +20,8 @@ class EPMDConnection {
 	public $domain = NULL;
 	public $node_name = NULL;
 	public $hidden_node_name = "php";
+	public $socket = NULL;
 	
-	protected $socket = NULL;
 	private $node_port = NULL;
 	private $epinterface = NULL;
 	
@@ -36,6 +36,10 @@ class EPMDConnection {
 	
 	function connect() {
 		socket_connect($this->socket, $this->ip, $this->port);
+	}
+	
+	function disconnect() {
+		socket_close($this->socket);
 	}
 	
 	function request($req_type_id, $request_parts) {
