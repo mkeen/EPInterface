@@ -3,8 +3,8 @@ class EPInterface {
 	
 	private $epmd_connection;
 	
-	function __construct($remote_addr, $node_name) {
-		$this->epmd_connection = new EPMDConnection($remote_addr, $node_name, $this);
+	function __construct($remote_addr, $node_name, $port = 4369) {
+		$this->epmd_connection = new EPMDConnection($remote_addr, $node_name, $this, $port);
 	}
 	
 	function epmd_connection_active() {
@@ -15,7 +15,7 @@ class EPInterface {
 
 class EPMDConnection {
 	
-	public $port = 4369;
+	public $port = NULL;
 	public $ip = NULL;
 	public $domain = NULL;
 	public $node_name = NULL;
@@ -25,7 +25,8 @@ class EPMDConnection {
 	private $node_port = NULL;
 	private $epinterface = NULL;
 	
-	function __construct($domain, $node_name, $interface) {
+	function __construct($domain, $node_name, $interface, $port) {
+		$this->port = $port;
 		$this->ip = gethostbyname($this->domain = $domain);
 		$this->epinterface = $interface;
 		$this->node_name = $node_name;
