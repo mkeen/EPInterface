@@ -7,6 +7,10 @@ class EPInterface {
 		$this->epmd_connection = new EPMDConnection($remote_addr, $node_name, $this);
 	}
 	
+	function epmd_connection_active() {
+		return $epmd_connection->socket;
+	}
+	
 }
 
 class EPMDConnection {
@@ -17,9 +21,9 @@ class EPMDConnection {
 	public $node_name = NULL;
 	public $hidden_node_name = "php";
 	
-	private $socket;
-	private $node_port;
-	private $epinterface;
+	protected $socket = NULL;
+	private $node_port = NULL;
+	private $epinterface = NULL;
 	
 	function __construct($domain, $node_name, $interface) {
 		$this->ip = gethostbyname($this->domain = $domain);
@@ -31,8 +35,6 @@ class EPMDConnection {
 	
 	function connect() {
 		socket_connect($this->socket, $this->ip, $this->port);
-		$this->alive2_req();
-		$this->port_please2_req();
 	}
 	
 	function request($req_type_id, $request_parts) {
@@ -114,12 +116,12 @@ class EPMDConnection {
 	
 	function alive2_req() {
 		$this->request(120, array(array('C', 8574), array('n', 72), array('n', 0), array('C', 5), array('C', 5), array('n', strlen($this->hidden_node_name)), array('C', $this->hidden_node_name)));
-		print_r($this->response(120));
+		return $this->response(120);
 	}
 	
 	function port_please2_req() {
 		$this->request(122, array(array('C', $this->node_name)));
-		print_r($this->response(122));
+		return $this->response(122);
 	}
 	
 }
