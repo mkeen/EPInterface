@@ -43,6 +43,9 @@ class EPMDConnection {
 	}
 	
 	function request($req_type_id, $request_parts) {
+		$byte_count_basis = array('C' => 0, 'n' => 0);
+		$byte_count = 0;
+		
 		foreach($request_parts as $part) {
 			switch($part[0]) {
 				case "C":
@@ -82,12 +85,22 @@ class EPMDConnection {
 		switch($req_type_id) {
 			case 120:
 				$named_map = array('Code', 'Result', 'Creation');
-				$byte_sequence = array(array("C", 1), array("C", 1), array('n', 2));
+				$byte_sequence = array(array("C", 1),
+				                       array("C", 1), 
+									   array('n', 2));
 			break;
 
 			case 122:
 				$named_map = array('Code', 'Result', 'PortNo', 'NodeType', 'Protocol', 'HighestVersion', 'LowestVersion', 'Nlen', 'NodeName');
-				$byte_sequence = array(array("C", 1), array("C", 1), array("n", 2), array("C", 1), array("C", 1), array("n", 2), array("n", 2), array("n", 2), array("C*", strlen($this->node_name) + 1));
+				$byte_sequence = array(array("C", 1),
+									   array("C", 1),
+									   array("n", 2),
+									   array("C", 1),
+									   array("C", 1),
+									   array("n", 2),
+									   array("n", 2),
+									   array("n", 2),
+									   array("C*", strlen($this->node_name) + 1));
 			break;
 		}
 		
@@ -120,7 +133,14 @@ class EPMDConnection {
 	}
 	
 	function alive2_req() {
-		$this->request(120, array(array('C', 8574), array('n', 72), array('n', 0), array('C', 5), array('C', 5), array('n', strlen($this->hidden_node_name)), array('C', $this->hidden_node_name)));
+		$this->request(120, array(array('C', 8574),
+							array('n', 72),
+							array('n', 0),
+							array('C', 5),
+							array('C', 5),
+							array('n', strlen($this->hidden_node_name)),
+							array('C', $this->hidden_node_name)));
+	
 		return $this->response(120);
 	}
 	
