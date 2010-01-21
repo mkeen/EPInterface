@@ -7,13 +7,13 @@ class EPMDRequest {
 	
 	function Alive2_Req($portno, $nodetype, $protocol, $lowestversion, $highestversion, $nodename, $extra = NULL) {
 		return EPMDRequest::marshall(120, array((int) $portno,
-												(string) $nodetype,
-												(string) $protocol,
-												(int) $lowestversion,
-												(int) $highestversion,
-												(int) mb_strlen(pack("n", $nodename)),
-												(string) $nodename,
-												(!is_null($extra)) ? (string) mb_strlen(pack("n", $extra)) : NULL));
+									(string) $nodetype,
+									(string) $protocol,
+									(int) $lowestversion,
+									(int) $highestversion,
+									(int) mb_strlen(pack("n", $nodename)),
+									(string) $nodename,
+									(!is_null($extra)) ? (string) mb_strlen(pack("n", $extra)) : NULL));
 	}
 	
 	function marshall($req_code, $request) {
