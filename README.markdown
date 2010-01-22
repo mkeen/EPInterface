@@ -45,8 +45,7 @@ Why Am I Working on This?
 
 Because I dislike unstable/unreliable PHP extensions, and I feel I can write something just
 as fast with native PHP, though persistence is admittedly a problem. I plan on solving this
-in a couple of interesting ways though. Also, I like avoiding my actual work. If you think
-this project is lame, please fuck off silently.
+in a couple of interesting ways though.
 
 Wanna Talk Shop?
 ----------------
