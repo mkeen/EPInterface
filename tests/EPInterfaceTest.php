@@ -50,6 +50,18 @@ class EPInterfaceTest extends PHPUnit_Framework_TestCase {
 		$this->assertArrayHasKey("elen", $result);
 		$this->assertArrayHasKey("extra", $result);
 	}
+	
+	public function testNames() {
+		$epi = new EPInterface(RABBITMQ_SERVER_HOSTNAME, RABBITMQ_ERLANG_NODENAME, RABBITMQ_ERLANG_PORTNUMB);
+		
+		echo "\nSending NAMES_REQ...\n";
+		$result = $epi->epmd_connection->Names();
+		$this->assertType(PHPUnit_Framework_Constraint_IsType::TYPE_ARRAY, $result);
+		
+		echo "Making sure parsed response is reasonably well formed...\n";
+		$this->assertArrayHasKey("name", $result[0]);
+		$this->assertArrayHasKey("port", $result[0]);
+	}
 
 }
 ?>

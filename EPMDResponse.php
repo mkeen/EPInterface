@@ -20,6 +20,15 @@ class EPMDResponse {
 	}
 	
 	/**
+	 * Erlang Distribution Protocol: ALIVE2_RESP
+	 * @param socket_resource &$socket Reference to the active socket with a buffer ready to be read.
+	 * @return array|string Framed response array from EPMD on success, or an error string if something goes wrong.
+	 */
+	function Names_Resp(&$socket) {
+		return EPMDResponse::read_socket($socket, 4369);
+	}
+	
+	/**
 	 * Frames all responses from the EPMD daemon. The code isn't very aesthetically pleasing, but it's easy to figure out what's going on.
 	 * @param socket_resource &$socket Reference to the active socket with a buffer ready to be read.
 	 * @param int $resp_code The request code for the corresponding response code. 120 = ALIVE2_REQ, 122 = PORT_PLEASE2_REQ, 110 = NAMES_REQ, 100 = DUMP_REQ, 107 = KILL_REQ
@@ -68,6 +77,21 @@ class EPMDResponse {
 				}
 				
 			break;
+			
+			case 4369:
+				$response = array();
+				$buffer = explode("\n", socket_read($socket, 99999));
+				array_pop($buffer);
+				foreach($buffer as $key=>$entry) {
+					$sn = explode(" at port ", $entry);
+					$sn[0] = str_replace("name ", "", $sn[0]);
+					$response[$key]['name'] = $sn[0];
+					$response[$key]['port'] = $sn[1];
+				}
+				
+				return $response;				
+			break;
+			
 		}
 		
 		return (!is_null($error)) ? $error : $response;

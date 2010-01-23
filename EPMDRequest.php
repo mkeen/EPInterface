@@ -33,12 +33,20 @@ class EPMDRequest {
 	}
 	
 	/**
+	 * Erlang Distribution Protocol: NAMES_REQ
+	 * @return array 
+	 */
+	function Names_Req() {
+		return EPMDRequest::marshall(110);
+	}
+	
+	/**
 	 * Frames all outgoing requests to the EPMD daemon. All requests are preceeded by a 2 byte length field, and a request code.
 	 * @param integer $req_code 120 = ALIVE2_REQ, 122 = PORT_PLEASE2_REQ, 110 = NAMES_REQ, 100 = DUMP_REQ, 107 = KILL_REQ
 	 * @param mixed $request Generally, you should pass an array of typed entities. This function encodes each entity in a different way depending on its data type. Strings aren't specially encoded, but integers are encoded to an unsigned short 16-bit int, and NULL values are encoded as unsigned short 16-bit ints as 0.
 	 * @return array 
 	 */
-	function marshall($req_code, $request) {
+	function marshall($req_code, $request = NULL) {
 		/**
 		 * Just to keep marshall requests clean, allow a regular variable to be
 		 * passed in instead of an array. This will stuff {@link $request} into an array
@@ -62,25 +70,31 @@ class EPMDRequest {
 		 * {@link $request} array, apply the correct encoding and append it to the
 		 * byte array to be returned.
 		 */
-		foreach($request as $request_item) {
-			if(is_string($request_item)) {
-				array_push($marshalled, $request_item);
-			} elseif(is_int($request_item)) {
-				array_push($marshalled, pack("n", $request_item));
-			} elseif(is_null($request_item)) {
-				array_push($marshalled, pack("n", 0));
+		if(!is_null($request[0])) {
+			foreach($request as $request_item) {
+				if(is_string($request_item)) {
+					array_push($marshalled, $request_item);
+				} elseif(is_int($request_item)) {
+					array_push($marshalled, pack("n", $request_item));
+				} elseif(is_null($request_item)) {
+					array_push($marshalled, pack("n", 0));
+				}
+			
+				/**
+				 * Continue the byte size tally of the request
+				 */
+				$binlen = $binlen + mb_strlen($marshalled[count($marshalled) - 1]);
 			}
 			
-			/**
-			 * Continue the byte size tally of the request
-			 */
-			$binlen = $binlen + mb_strlen($marshalled[count($marshalled) - 1]);
 		}
 		
 		/**
 		 * Prepend the binary length of the framed request as an unsigned 16-bit integer
 		 */
-		array_unshift($marshalled, pack("n", $binlen));
+		if(!is_null($request)) {
+			array_unshift($marshalled, pack("n", $binlen));
+		}
+		
 		return $marshalled;
 	}
 	

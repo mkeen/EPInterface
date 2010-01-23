@@ -57,4 +57,16 @@ class EPMDConnection {
 		return $result;
 	}
 	
+	/**
+	 * Builds a NAMES_REQ, writes it, and returns a nice NAMES_RESP or an error.
+	 * @return array|string Either a framed NAMES_RESP or a string containing error details
+	 */
+	function Names() {
+		$this->connect();
+		socket_write($this->socket, implode(EPMDRequest::Names_Req()));		
+		$result = EPMDResponse::Names_Resp($this->socket);
+		socket_close($this->socket);
+		return $result;
+	}
+	
 }
