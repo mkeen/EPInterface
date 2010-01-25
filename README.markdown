@@ -1,7 +1,7 @@
 EPInterface
 ===========
 
-![EPInterface](http://mikekeen.github.com/img/epinterface.png "EPInterface")
+![EPInterface](http://mkeen.github.com/img/epinterface.png "EPInterface")
 
 I like to program weird stuff, so I figured a PHP/Erlang integration toolkit would be a
 good place to start for my first open source project. I have no plans to make this a PHP
