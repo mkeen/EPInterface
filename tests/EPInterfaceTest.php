@@ -1,5 +1,5 @@
 <?php
-require_once '../EPInterface.php';
+require_once 'EPInterface.php';
 require_once 'PHPUnit/Framework.php';
 
 define('RABBITMQ_SERVER_HOSTNAME', 'localhost');
