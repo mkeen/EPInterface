@@ -49,9 +49,7 @@ Because I dislike unstable/unreliable PHP extensions, and I feel I can write som
 as fast with native PHP, though persistence is admittedly a problem. I plan on solving this
 in a couple of interesting ways though.
 
-Wanna Talk Shop?
-----------------
-
-I'm on iChat (AIM) pretty much all day, and all night for that matter. Yes I know AIM is lame.
-No, I don't care. Screenname is inmmike. You can find me on twitter too.
+Contact the Author
+------------------
 I'm [@mikekeen](http://twitter.com/mikekeen).
+My email address is mkeen [@] gmail dot com. Feel free to add me to Google Talk.
