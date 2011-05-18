@@ -52,4 +52,4 @@ in a couple of interesting ways though.
 Contact the Author
 ------------------
 I'm [@mikekeen](http://twitter.com/mikekeen).
-My email address is mkeen [@] gmail dot com. Feel free to add me to Google Talk.
+My email address is mkeen.atl [@] gmail dot com. Feel free to add me to Google Talk.
