@@ -45,9 +45,8 @@ There is a C extension for PHP that uses the EI library for super tight and pers
 Why Am I Working on This?
 -------------------------
 
-Because I dislike unstable/unreliable PHP extensions, and I feel I can write something just
-as fast with native PHP, though persistence is admittedly a problem. I plan on solving this
-in a couple of interesting ways though.
+I feel I can write something just as fast as C with native PHP, though persistence is
+admittedly a problem. I plan on solving this in a couple of interesting ways though.
 
 Contact the Author
 ------------------
