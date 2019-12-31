@@ -50,5 +50,5 @@ admittedly a problem. I plan on solving this in a couple of interesting ways tho
 
 Contact the Author
 ------------------
-I'm [@mikekeen](http://twitter.com/mikekeen).
+I'm [@mikekeen](http://gab.ai/mikekeen).
 My email address is mkeen.atl [@] gmail dot com. Feel free to add me to Google Talk.
